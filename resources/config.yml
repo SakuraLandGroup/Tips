@@ -1,0 +1,3 @@
+autoLoad:
+  enabled: true
+  tipName: 'default'

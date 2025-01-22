@@ -1,0 +1,10 @@
+default:
+  sidebar: true
+  updateTime: 10
+  messages:
+    - '  &d&l>> §bSLTips &d<<'
+    - ''
+    - '&6· §fPlayer: &a%{player}'
+    - '&6· §fOnline: &e%{online}'
+    - ''
+    - '&fQQ Group: &a978642332'
