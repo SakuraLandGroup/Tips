@@ -2,9 +2,9 @@
 
 namespace SakuraLandGroup\Tips\tip;
 
+use pocketmine\Player;
 use pocketmine\scheduler\PluginTask;
 use pocketmine\utils\TextFormat;
-use SakuraLandGroup\Essentials\util\Util;
 use SakuraLandGroup\Tips\Tips;
 
 class TipTask extends PluginTask
@@ -23,6 +23,9 @@ class TipTask extends PluginTask
         if ($plugin->isDisabled()) {
             return;
         }
+        /**
+         * @var Player $player
+         */
         foreach ($this->tip->getPlayers() as $player) {
             $message = '';
             foreach ($this->tip->getMessages() as $message_line) {
@@ -34,8 +37,12 @@ class TipTask extends PluginTask
 
             $message = str_ireplace('%{online}', count($player->getServer()->getOnlinePlayers()), $message);
             $message = str_ireplace('%{player}', $player->getName(), $message);
+            $message = str_ireplace('%{position}', implode(', ', [$player->getFloorX(), $player->getFloorY(), $player->getFloorZ()]), $message);
+            $message = str_ireplace('%{world}', $player->level->getFolderName(), $message);
 
-            $player->sendTip(Util::colorizeText($message));
+            $message = preg_replace('/' . preg_quote('&', '/') . '([0-9a-gk-or])/u', TextFormat::ESCAPE . '$1', $message);
+
+            $player->sendTip($message);
         }
     }
 }
